@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# TypeScript build info files
+# tsconfig.app.tsbuildinfo とか tsconfig.node.tsbuildinfo はビルドキャッシュだから、バージョン管理外にする。
+*.tsbuildinfo
