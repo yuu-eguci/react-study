@@ -13,7 +13,7 @@ dist-ssr
 *.local
 
 # Editor directories and files
-.vscode/*
+# .vscode/* これは workbench.colorCustomizations のために git 管理しよう。
 !.vscode/extensions.json
 .idea
 .DS_Store
