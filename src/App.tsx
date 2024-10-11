@@ -19,13 +19,17 @@ const theme = createTheme({
     error: {
       main: '#DC004E', // 既存のカラーを活かしたい場合
     },
+    success: {
+      main: '#4CAF50', // グリーン（成功時の色）
+      dark: '#388E3C', // グリーンのダークバージョン（成功時のホバー色などに使用）
+    },
     background: {
       default: '#FAEBD7', // クリーム色
       paper: '#91CCD7', // アクアマリン色をペーパー背景に
     },
     text: {
       primary: '#2C2C2C', // テキストカラーをダークグレー
-      secondary: '#FFFFFF', // 明るい背景用のテキストカラー
+      secondary: '#4A4A4A', // ライトグレーに変更して読みやすくしたよ！
     },
   },
 })
