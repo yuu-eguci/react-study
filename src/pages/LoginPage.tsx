@@ -41,7 +41,7 @@ function LoginPage() {
 
       // ログイン成功アイコンを少し表示した後、ルートに遷移する
       setTimeout(() => {
-        navigate('/')
+        navigate(`/?user=${encodeURIComponent(loginId)}`)
       }, 2000)
     }, 2000) // 2秒間ローディングのふりをする
   }

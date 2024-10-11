@@ -1,5 +1,7 @@
 import CustomImageButton from '@/components/CustomImageButton'
 import Box from '@mui/material/Box'
+import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 // アイコンのインポート
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -36,6 +38,19 @@ const images = [
 ]
 
 function MainMenuPage() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search)
+    const user = queryParams.get('user')
+
+    if (!user) {
+      // `user` パラメータがなければ `/login` へリダイレクト
+      navigate('/login')
+    }
+  }, [location, navigate])
+
   return (
     <div>
       <Box
