@@ -1,6 +1,7 @@
 import CustomImageButton from '@/components/CustomImageButton'
 import Box from '@mui/material/Box'
-import { useEffect } from 'react'
+import Typography from '@mui/material/Typography'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 // アイコンのインポート
@@ -40,14 +41,17 @@ const images = [
 function MainMenuPage() {
   const location = useLocation()
   const navigate = useNavigate()
+  const [user, setUser] = useState<string | null>(null)
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
-    const user = queryParams.get('user')
+    const userParam = queryParams.get('user')
 
-    if (!user) {
+    if (!userParam) {
       // `user` パラメータがなければ `/login` へリダイレクト
       navigate('/login')
+    } else {
+      setUser(userParam)
     }
   }, [location, navigate])
 
@@ -57,15 +61,30 @@ function MainMenuPage() {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          flexWrap: 'wrap',
-          minWidth: 300,
-          width: '100%',
+          alignItems: 'center',
           gap: 2,
+          padding: 3,
         }}
       >
-        {images.map((image) => (
-          <CustomImageButton key={image.url} image={image} />
-        ))}
+        {user && (
+          <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
+            ようこそ {user} さん
+          </Typography>
+        )}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'wrap',
+            minWidth: 300,
+            width: '100%',
+            gap: 2,
+          }}
+        >
+          {images.map((image) => (
+            <CustomImageButton key={image.url} image={image} />
+          ))}
+        </Box>
       </Box>
     </div>
   )
