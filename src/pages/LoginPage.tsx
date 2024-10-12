@@ -1,16 +1,27 @@
 import LoginButton from '@/components/LoginButton'
 import LoginLoadingButton from '@/components/LoginLoadingButton'
 import LoginSuccessButton from '@/components/LoginSuccessButton'
+import {
+  Box,
+  FormControl,
+  TextField
+} from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
-import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import CircularProgress from '@mui/material/CircularProgress'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
-import TextField from '@mui/material/TextField'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+// 画像のインポート（@/assets/images の中にある画像を使う場合）
+import birdImg from '@/assets/images/bg_bird.jpg'
+import countrysideImg from '@/assets/images/bg_countryside.jpg'
+import nightskyImg from '@/assets/images/bg_nightsky.jpg'
+import treesImg from '@/assets/images/bg_trees.jpg'
+import umbrellaImg from '@/assets/images/bg_umbrella.jpg'
+import waterpaintingImg from '@/assets/images/bg_waterpainting.jpg'
 
 // アイコンのインポート
 import Visibility from '@mui/icons-material/Visibility'
@@ -23,6 +34,9 @@ function LoginPage() {
   const [agreeToTerms, setAgreeToTerms] = useState(false)
   const [loading, setLoading] = useState(false)
   const [loginSuccess, setLoginSuccess] = useState(false)
+  const [randomImage] = useState(() =>
+    [umbrellaImg, waterpaintingImg, birdImg, countrysideImg, nightskyImg, treesImg][Math.floor(Math.random() * 6)]
+  )
 
   const navigate = useNavigate()
 
@@ -55,66 +69,113 @@ function LoginPage() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '100vh',
         gap: 2,
-        padding: 3,
+        minHeight: '80vh',
       }}
     >
-      <TextField
-        label="ログイン ID"
-        variant="outlined"
+      <Box
+        sx={{
+          position: 'relative',
+          width: 600,
+          height: 200,
+          marginBottom: 2,
+        }}
+      >
+        <Box
+          component="img"
+          src={randomImage}
+          alt="background banner"
+          sx={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+          }}
+        />
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            bgcolor: 'rgba(0, 0, 0, 0.3)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            fontSize: '24px',
+            fontWeight: 'bold',
+          }}
+        >
+          素敵で小さなサンプルウェブページ
+        </Box>
+      </Box>
+
+      <FormControl
         fullWidth
-        value={loginId}
-        onChange={(e) => {
-          const value = e.target.value
-          if (/^[a-zA-Z0-9]*$/.test(value)) {
-            setLoginId(value)
+        sx={{
+          gap: 2,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 300,
+        }}
+      >
+        <TextField
+          label="ログイン ID"
+          variant="outlined"
+          fullWidth
+          value={loginId}
+          onChange={(e) => {
+            const value = e.target.value
+            if (/^[a-zA-Z0-9]*$/.test(value)) {
+              setLoginId(value)
+            }
+          }}
+        />
+        <TextField
+          label="パスワード"
+          variant="outlined"
+          type={showPassword ? 'text' : 'password'}
+          fullWidth
+          value={password}
+          onChange={(e) => {
+            const value = e.target.value
+            if (/^[a-zA-Z0-9]*$/.test(value)) {
+              setPassword(value)
+            }
+          }}
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={agreeToTerms}
+              onChange={(e) => setAgreeToTerms(e.target.checked)}
+            />
           }
-        }}
-      />
-      <TextField
-        label="パスワード"
-        variant="outlined"
-        type={showPassword ? 'text' : 'password'}
-        fullWidth
-        value={password}
-        onChange={(e) => {
-          const value = e.target.value
-          if (/^[a-zA-Z0-9]*$/.test(value)) {
-            setPassword(value)
-          }
-        }}
-        slotProps={{
-          input: {
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          },
-        }}
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={agreeToTerms}
-            onChange={(e) => setAgreeToTerms(e.target.checked)}
-          />
-        }
-        label="利用規約に同意する"
-      />
-      {loading ? (
-        <LoginLoadingButton disabled={isDisabled} />
-      ) : loginSuccess ? (
-        <LoginSuccessButton disabled={isDisabled} />
-      ) : (
-        <LoginButton onClick={handleLogin} disabled={isDisabled} />
-      )}
+          label="利用規約に同意する"
+        />
+        {loading ? (
+          <LoginLoadingButton disabled={isDisabled} />
+        ) : loginSuccess ? (
+          <LoginSuccessButton disabled={isDisabled} />
+        ) : (
+          <LoginButton onClick={handleLogin} disabled={isDisabled} />
+        )}
+      </FormControl>
 
       {/* ローディング中はオーバーレイを表示 */}
       <Backdrop
