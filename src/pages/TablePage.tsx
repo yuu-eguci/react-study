@@ -1,25 +1,266 @@
-import Button from '@/components/Button'
-import formatDate from '@/utils/formatDate'
-import { useEffect, useState } from 'react'
+import { useAuthRedirect } from '@/hooks/useAuthRedirect'
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material'
+import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+const items: { [key: string]: { id: string; name: string; unitPrice: number } } = {
+  A001: { id: 'A001', name: 'ノートパソコン', unitPrice: 50 },
+  A002: { id: 'A002', name: 'スマートフォン', unitPrice: 15 },
+  A003: { id: 'A003', name: 'プリンター', unitPrice: 10 },
+  A004: { id: 'A004', name: 'デスクチェア', unitPrice: 5 },
+  A005: { id: 'A005', name: 'コーヒーメーカー', unitPrice: 10 },
+  A006: { id: 'A006', name: 'ヘッドフォン', unitPrice: 30 },
+  A007: { id: 'A007', name: 'ボールペン', unitPrice: 49 },
+  A008: { id: 'A008', name: 'ノート', unitPrice: 45 },
+  A009: { id: 'A009', name: 'モニター', unitPrice: 10 },
+  A010: { id: 'A010', name: 'キーボード', unitPrice: 30 },
+}
+const itemOptions = Object.keys(items)
 
 function TablePage() {
-  const [formattedDate, setFormattedDate] = useState<string>('')
+  const user = useAuthRedirect()
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    const currentDate = new Date()
-    const dateStr = formatDate(currentDate)
-    setFormattedDate(dateStr)
-  }, [])
+  // 品番
+  const [selectedItemId, setSelectedItemId] = useState('')
+  // 品名 (品番 -> 自動入力)
+  const itemName = useMemo(() => {
+    return items[selectedItemId]?.name || '品番を入力してください'
+  }, [selectedItemId])
+  // 単価 (品番 -> 自動入力)
+  const unitPrice = useMemo(() => {
+    return items[selectedItemId]?.unitPrice || 0
+  }, [selectedItemId])
+  // 数量
+  const [quantity, setQuantity] = useState(0)
+  // 金額
+  const sumAmount = useMemo(() => unitPrice * quantity, [unitPrice, quantity])
 
-  const handleClick = () => {
-    alert('Button clicked!')
+  const [tableData, setTableData] = useState<{ id: string, name: string, quantity: number, unitPrice: number, sumAmount: number }[]>([])
+
+  // 表にデータを追加 -> フォームをクリア
+  const handleAddData = () => {
+    if (!selectedItemId || !itemName || quantity <= 0 || unitPrice <= 0) {
+      alert('すべての値を正しく入力してください')
+      return
+    }
+
+    const testLength = 5
+    const newDataArray = Array.from({ length: testLength }, () => ({
+      id: selectedItemId,
+      name: itemName,
+      quantity,
+      unitPrice,
+      sumAmount,
+    }))
+    setTableData((prevData) => [...prevData, ...newDataArray])
+    setSelectedItemId('')
+    setQuantity(0)
   }
 
   return (
-    <div>
-      <h1>Welcome to the Home Page - {formattedDate}</h1>
-      <Button label="Click Me" onClick={handleClick} />
-    </div>
+    <Box sx={{
+      width: '1000px',
+      padding: 2,
+      overflow: 'auto', // スクロールバーを表示
+    }}>
+      {/* メインメニューに戻るボタン */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Button
+          variant="contained"
+          size="small"
+          color="secondary"
+          onClick={() => navigate(`/?user=${encodeURIComponent(user || '')}`)}
+          sx={{ marginBottom: 2 }}
+        >
+          戻る
+        </Button>
+
+        <Button
+          variant="outlined"
+          size="small"
+          color="secondary"
+          onClick={() => {
+            const newData = Object.keys(items).map((key) => {
+              const item = items[key]
+              return {
+                id: item.id,
+                name: item.name,
+                quantity: 1,
+                unitPrice: item.unitPrice,
+                sumAmount: item.unitPrice * 1
+              }
+            })
+
+            setTableData((prevData) => [...prevData, ...newData])
+          }}
+          sx={{ marginBottom: 2 }}
+        >
+          テスト
+        </Button>
+      </Box>
+
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        {/* 左側の入力フォーム */}
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+          }}
+        >
+          <Typography variant="h6" component="div">
+            入力フォーム
+          </Typography>
+          <FormControl
+            fullWidth
+            sx={{
+              gap: 2,
+            }}
+          >
+            <InputLabel id="product-select-label">品番</InputLabel>
+            <Select
+              labelId="product-select-label"
+              id="product-select"
+              value={selectedItemId}
+              label="品番"
+              onChange={(e: SelectChangeEvent) => setSelectedItemId(e.target.value)}
+            >
+              {itemOptions.map((itemId) => (
+                <MenuItem key={itemId} value={itemId}>
+                  {itemId} ({items[itemId].name})
+                </MenuItem>
+              ))}
+            </Select>
+            <TextField
+              label="品名"
+              variant="filled"
+              value={itemName}
+              slotProps={{
+                input: {
+                  readOnly: true,
+                },
+              }}
+            />
+            <TextField
+              label="数量"
+              type="number"
+              variant="outlined"
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+            />
+            <TextField
+              label="単価"
+              type="number"
+              variant="filled"
+              value={unitPrice}
+              slotProps={{
+                input: {
+                  readOnly: true,
+                },
+              }}
+            />
+            <TextField
+              label="金額 (数量 x 単価)"
+              type="number"
+              variant="filled"
+              value={sumAmount}
+              slotProps={{
+                input: {
+                  readOnly: true,
+                },
+              }}
+            />
+            <Button variant="contained" color="primary" onClick={handleAddData}>
+              データを追加
+            </Button>
+          </FormControl>
+        </Box>
+
+        {/* 右側のテーブル */}
+        <Box
+          sx={{
+            flex: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+          }}
+        >
+          <TableContainer
+            component={Paper}
+            sx={{
+              maxHeight: '80vh',
+              overflowY: 'scroll',
+              '&::-webkit-scrollbar': {
+                width: '8px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'lightgray',
+                borderRadius: '4px',
+              },
+            }}
+          >
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell>品番</TableCell>
+                  <TableCell>品名</TableCell>
+                  <TableCell>数量</TableCell>
+                  <TableCell>単価 (￥)</TableCell>
+                  <TableCell>金額 (￥)</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="secondary"
+                      onClick={() => {
+                        if (tableData.length > 0 && window.confirm('データをクリアしますか？')) {
+                          setTableData([])
+                        }
+                      }}
+                    >
+                      クリア
+                    </Button>
+                  </TableCell>
+
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {tableData.map((data, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{data.id}</TableCell>
+                    <TableCell>{data.name}</TableCell>
+                    <TableCell align="right">{data.quantity.toLocaleString()}</TableCell>
+                    <TableCell align="right">{data.unitPrice.toLocaleString()}</TableCell>
+                    <TableCell align="right">{data.sumAmount.toLocaleString()}</TableCell>
+                    <TableCell></TableCell>
+                    </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 
