@@ -1,25 +1,67 @@
-import Button from '@/components/Button'
-import formatDate from '@/utils/formatDate'
-import { useEffect, useState } from 'react'
+import RGBCheckBoxQuizComponent from '@/components/RGBCheckBoxQuizComponent'
+import RGBSliderQuizComponent from '@/components/RGBSliderQuizComponent'
+import { useAuthRedirect } from '@/hooks/useAuthRedirect'
+import {
+  Button
+} from '@mui/material'
+import Backdrop from '@mui/material/Backdrop'
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function VariousControlsPage() {
-  const [formattedDate, setFormattedDate] = useState<string>('')
+  const user = useAuthRedirect()
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    const currentDate = new Date()
-    const dateStr = formatDate(currentDate)
-    setFormattedDate(dateStr)
-  }, [])
+  const [showFirstQuiz, setShowFirstQuiz] = useState(true)
+  const [loading, setLoading] = useState(false)
 
-  const handleClick = () => {
-    alert('Button clicked!')
+  const handleQuizCorrect = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setShowFirstQuiz(prev => !prev)
+      setLoading(false)
+    }, 2000);
   }
 
   return (
-    <div>
-      <h1>Welcome to the Home Page - {formattedDate}</h1>
-      <Button label="Click Me" onClick={handleClick} />
-    </div>
+    <Box sx={{
+      width: '1000px',
+      padding: 2,
+    }}>
+      {/* メインメニューに戻るボタン */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Button
+          variant="contained"
+          size="small"
+          color="secondary"
+          onClick={() => navigate(`/?user=${encodeURIComponent(user || '')}`)}
+          sx={{ marginBottom: 2 }}
+        >
+          戻る
+        </Button>
+      </Box>
+
+      {/* 光の三原色のクイズ */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        {/* 1問目 */}
+        {showFirstQuiz && <RGBCheckBoxQuizComponent onCorrect={handleQuizCorrect} />}
+        {/* 2問目 */}
+        {!showFirstQuiz && <RGBSliderQuizComponent />}
+      </Box>
+
+      {/* ローディング */}
+      <Backdrop
+        sx={{
+          color: '#fff',
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </Box>
   )
 }
 

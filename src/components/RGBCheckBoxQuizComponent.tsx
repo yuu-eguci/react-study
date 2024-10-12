@@ -1,4 +1,5 @@
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Box, Button, Checkbox, Paper, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -11,7 +12,11 @@ type CheckedColors = {
   blue: boolean
 }
 
-const RGBCheckBoxQuizComponent = () => {
+type RGBCheckBoxQuizComponentProps = {
+  onCorrect: () => void
+}
+
+const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) => {
   const [checkedColors, setCheckedColors] = useState<CheckedColors>({
     red: false,
     green: false,
@@ -49,6 +54,10 @@ const RGBCheckBoxQuizComponent = () => {
     if (activeColor === randomColor) {
       alert('正解です！あなたは光の三原色を完全に理解しています。')
       setIsLocked(true)
+      // 親コンポーネントに正解を通知する
+      if (onCorrect) {
+        onCorrect()
+      }
     } else {
       alert('残念、不正解です……！')
     }
@@ -95,6 +104,15 @@ const RGBCheckBoxQuizComponent = () => {
       >
         回答する
       </Button>
+
+      <Box sx={{ display: 'flex', justifyContent: 'right', marginTop: 2 }}>
+        <HelpOutlineIcon
+          color="secondary"
+          onClick={() => {
+            alert('チェックボックスの色を組み合わせて、同じ色を作ってみましょう！')
+          }}
+        />
+      </Box>
     </Paper>
   )
 }

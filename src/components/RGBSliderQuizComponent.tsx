@@ -1,4 +1,5 @@
 import OfficialIcon from '@/components/OfficialIcon'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { Box, Button, Paper, Slider, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 
@@ -36,7 +37,7 @@ const RGBSliderQuizComponent = () => {
         This is a sample for the sliders.
       </Typography>
       <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        このアイコンを作ってみよう
+        最終問題: このアイコンを作ってみよう
       </Typography>
       <Paper elevation={3} sx={{ display: 'inline-block', padding: 2, borderRadius: '50%', marginBottom: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -86,6 +87,19 @@ const RGBSliderQuizComponent = () => {
       >
         回答する
       </Button>
+
+      <Box sx={{ display: 'flex', justifyContent: 'right', marginTop: 2 }}>
+        <HelpOutlineIcon
+          color="secondary"
+          onClick={() => {
+            alert(
+              'ええ、無茶ですとも。本問題は Automation による自動回答を期待しているのです。'
+              + 'でも……ええ、作ってる私自身がテストできないのでここに答えを書いトキマス。'
+              + `今回の答えは: ${randomColor}`
+            )
+          }}
+        />
+      </Box>
     </Paper>
   )
 }
