@@ -77,12 +77,11 @@ function TablePage() {
 
   return (
     <Box sx={{
-      width: '1000px',
+      width: { xs: '100%', sm: '1000px' },
       padding: 2,
-      overflow: 'auto', // スクロールバーを表示
     }}>
-      {/* メインメニューに戻るボタン */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        {/* メインメニューに戻るボタン */}
         <Button
           variant="contained"
           size="small"
@@ -117,7 +116,13 @@ function TablePage() {
         </Button>
       </Box>
 
-      <Box sx={{ display: 'flex', gap: 2 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 2,
+          flexDirection: { xs: 'column', sm: 'row' },
+        }}
+      >
         {/* 左側の入力フォーム */}
         <Box
           sx={{
@@ -210,6 +215,7 @@ function TablePage() {
               maxHeight: '80vh',
               overflowY: 'scroll',
               '&::-webkit-scrollbar': {
+                backgroundColor: '#FFFFFF',
                 width: '8px',
               },
               '&::-webkit-scrollbar-thumb': {
