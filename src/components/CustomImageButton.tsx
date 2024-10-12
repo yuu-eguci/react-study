@@ -109,6 +109,7 @@ function CustomImageButton({ image }: CustomImageButtonProps) {
             variant="subtitle1"
             color="inherit"
             sx={(theme) => ({
+              position: 'relative',
               display: 'flex',
               alignItems: 'center',
               gap: theme.spacing(1),
