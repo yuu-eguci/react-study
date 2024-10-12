@@ -32,7 +32,16 @@ const RGBSliderQuizComponent = () => {
   }
 
   return (
-    <Paper elevation={3} sx={{ padding: 4, borderRadius: 2, minWidth: 400, margin: '0 auto', textAlign: 'center' }}>
+    <Paper
+      elevation={3}
+      sx={{
+        padding: 4,
+        borderRadius: 2,
+        minWidth: { xs: '100%', sm: 400 },
+        margin: '0 auto',
+        textAlign: 'center',
+      }}
+    >
       <Typography variant="caption" sx={{ marginBottom: 2 }}>
         This is a sample for the sliders.
       </Typography>

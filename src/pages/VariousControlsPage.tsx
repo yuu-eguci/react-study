@@ -27,7 +27,8 @@ function VariousControlsPage() {
 
   return (
     <Box sx={{
-      width: '1000px',
+      // レスポンシブ対応。
+      width: { xs: '100%', sm: '1000px' },
       padding: 2,
     }}>
       {/* メインメニューに戻るボタン */}
