@@ -59,8 +59,10 @@ function MainMenuPage() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: 2,
         padding: 3,
+        minHeight: '80vh',
       }}
     >
       {user && (
