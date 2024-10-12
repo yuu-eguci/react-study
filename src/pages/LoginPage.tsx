@@ -4,7 +4,8 @@ import LoginSuccessButton from '@/components/LoginSuccessButton'
 import {
   Box,
   FormControl,
-  TextField
+  TextField,
+  Typography,
 } from '@mui/material'
 import Backdrop from '@mui/material/Backdrop'
 import Checkbox from '@mui/material/Checkbox'
@@ -91,24 +92,30 @@ function LoginPage() {
             objectFit: 'cover',
           }}
         />
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            bgcolor: 'rgba(0, 0, 0, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'white',
-            fontSize: '24px',
-            fontWeight: 'bold',
-          }}
-        >
-          素敵で小さなサンプルウェブページ
-        </Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              bgcolor: 'rgba(0, 0, 0, 0.3)',
+              display: 'flex',
+              flexDirection: 'column', // 縦に並べる
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '24px',
+              fontWeight: 'bold',
+            }}
+          >
+            <Typography variant="h5" component="div">
+              素敵で小さなサンプルウェブページ
+            </Typography>
+            <Typography variant="caption">
+              Lovely Little Sample Web Page
+            </Typography>
+          </Box>
       </Box>
 
       <FormControl
