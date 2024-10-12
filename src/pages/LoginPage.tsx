@@ -77,8 +77,8 @@ function LoginPage() {
       <Box
         sx={{
           position: 'relative',
-          width: 600,
-          height: 200,
+          width: { xs: '100%', sm: 600 },
+          height: { xs: 150, sm: 200 },
           marginBottom: 2,
         }}
       >
