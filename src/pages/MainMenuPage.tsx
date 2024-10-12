@@ -35,7 +35,7 @@ function MainMenuPage() {
       url: wavingImg,
       title: 'ログアウト',
       width: '100%',
-      link: `/login?user=${encodeURIComponent(user || '')}`,
+      link: '/login',
       icon: <LogoutIcon />,
     },
   ]
