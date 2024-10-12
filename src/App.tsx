@@ -11,25 +11,21 @@ import { Route, Routes } from 'react-router-dom'
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#F4C632', // バナナイエロー
+      main: '#00BCD4',  // シアン
     },
     secondary: {
-      main: '#91CCD7', // アクアマリン
+      main: '#009688',  // ティール
     },
     error: {
-      main: '#DC004E', // 既存のカラーを活かしたい場合
+      main: '#E91E63',  // ピンクレッド
     },
     success: {
-      main: '#4CAF50', // グリーン（成功時の色）
-      dark: '#388E3C', // グリーンのダークバージョン（成功時のホバー色などに使用）
+      main: '#8BC34A',  // ライトグリーン
+      dark: '#689F38',  // グリーンのダークバージョン
     },
     background: {
-      default: '#FAEBD7', // クリーム色
-      paper: '#91CCD7', // アクアマリン色をペーパー背景に
-    },
-    text: {
-      primary: '#2C2C2C', // テキストカラーをダークグレー
-      secondary: '#4A4A4A', // ライトグレーに変更して読みやすくしたよ！
+      default: '#E0F7FA',  // 明るいシアン背景
+      paper: '#B2EBF2',  // 淡いシアン
     },
   },
 })
