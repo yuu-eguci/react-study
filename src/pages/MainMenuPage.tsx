@@ -1,7 +1,10 @@
 import CustomImageButton from '@/components/CustomImageButton'
 import { useAuthRedirect } from '@/hooks/useAuthRedirect'
+import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
+import { useState, useEffect } from 'react'
 
 // アイコンのインポート
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -15,6 +18,16 @@ import wavingImg from '@/assets/images/bg_waving.jpg'
 
 function MainMenuPage() {
   const user = useAuthRedirect()
+
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    setLoading(true)
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+  }, [])
 
   const images = [
     {
@@ -69,6 +82,17 @@ function MainMenuPage() {
           <CustomImageButton key={image.url} image={image} />
         ))}
       </Box>
+
+      {/* ローディング */}
+      <Backdrop
+        sx={{
+          color: '#fff',
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Box>
   )
 }

@@ -62,7 +62,7 @@ function TablePage() {
       return
     }
 
-    const testLength = 5
+    const testLength = 1
     const newDataArray = Array.from({ length: testLength }, () => ({
       id: selectedItemId,
       name: itemName,
