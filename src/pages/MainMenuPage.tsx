@@ -41,37 +41,35 @@ function MainMenuPage() {
   ]
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 2,
+        padding: 3,
+      }}
+    >
+      {user && (
+        <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
+          ようこそ {user} さん
+        </Typography>
+      )}
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          flexWrap: 'wrap',
+          minWidth: 300,
+          width: '100%',
           gap: 2,
-          padding: 3,
         }}
       >
-        {user && (
-          <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-            ようこそ {user} さん
-          </Typography>
-        )}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            flexWrap: 'wrap',
-            minWidth: 300,
-            width: '100%',
-            gap: 2,
-          }}
-        >
-          {images.map((image) => (
-            <CustomImageButton key={image.url} image={image} />
-          ))}
-        </Box>
+        {images.map((image) => (
+          <CustomImageButton key={image.url} image={image} />
+        ))}
       </Box>
-    </div>
+    </Box>
   )
 }
 
