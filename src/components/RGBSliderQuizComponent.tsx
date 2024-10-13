@@ -13,8 +13,10 @@ import {
   Typography
 } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const RGBSliderQuizComponent = () => {
+  const { t } = useTranslation()
   const [rgbValues, setRgbValues] = useState({ red: 0, green: 0, blue: 0 })
   const [randomColor, setRandomColor] = useState('rgb(0, 0, 0)')
   const [isLocked, setIsLocked] = useState(false)
@@ -58,19 +60,19 @@ const RGBSliderQuizComponent = () => {
       }}
     >
       <Typography variant="caption" sx={{ marginBottom: 2 }}>
-        This is a sample for the sliders.
+        {t('This is a sample for the sliders.')}
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 2 }}>
         <Typography variant="h6" sx={{ marginRight: 1 }}>
-          最終問題: このアイコンを作ってみよう
+          {t('最終問題：このアイコンを作ってみよう')}
         </Typography>
         <HelpIconWithDialog
           message={
             <>
-              ええ、無茶ですとも。<br />
-              これは Automation プログラムによる回答を期待しているのです。がんばって正解してください。<br />
-              ただ……ええ、作ってる私自身がテストできないのでここに答えを書いときマス。<br />
-              今回の答えは: {randomColor}
+              {t('ええ、無茶ですとも。')}<br />
+              {t('これは Automation プログラムによる回答を期待しているのです。がんばって正解してください。')}<br />
+              {t('ただ……ええ、作ってる私自身がテストできないのでここに答えを書いときマス。')}<br />
+              {t('今回の答えは')}: {randomColor}
             </>
           }
         />
@@ -83,7 +85,7 @@ const RGBSliderQuizComponent = () => {
       </Paper>
 
       <Box sx={{ marginBottom: 4 }}>
-        <Typography>R: {rgbValues.red}</Typography>
+        <Typography>{t('R')}: {rgbValues.red}</Typography>
         <Slider
           value={rgbValues.red}
           onChange={handleSliderChange('red')}
@@ -91,7 +93,7 @@ const RGBSliderQuizComponent = () => {
           max={255}
           disabled={isLocked}
         />
-        <Typography>G: {rgbValues.green}</Typography>
+        <Typography>{t('G')}: {rgbValues.green}</Typography>
         <Slider
           value={rgbValues.green}
           onChange={handleSliderChange('green')}
@@ -99,7 +101,7 @@ const RGBSliderQuizComponent = () => {
           max={255}
           disabled={isLocked}
         />
-        <Typography>B: {rgbValues.blue}</Typography>
+        <Typography>{t('B')}: {rgbValues.blue}</Typography>
         <Slider
           value={rgbValues.blue}
           onChange={handleSliderChange('blue')}
@@ -110,7 +112,6 @@ const RGBSliderQuizComponent = () => {
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 4 }}>
-        {/* <BrightnessHighIcon sx={{ fontSize: 80, color: currentColor }} /> */}
         <OfficialIcon width={100} height={100} fill={currentColor} />
       </Box>
 
@@ -122,19 +123,19 @@ const RGBSliderQuizComponent = () => {
         disabled={isLocked}
         sx={{ width: '100%' }}
       >
-        回答する
+        {t('回答する')}
       </Button>
 
       <Dialog
         open={openResultDialog}
         onClose={handleDialogClose}
       >
-        <DialogTitle>結果</DialogTitle>
+        <DialogTitle>{t('結果')}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             {currentColor === randomColor
-              ? '正解です！あなたは光の三原色の支配者です。'
-              : '残念、不正解です……！'}
+              ? t('正解です！あなたは光の三原色の支配者です。')
+              : t('残念、不正解です……！')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

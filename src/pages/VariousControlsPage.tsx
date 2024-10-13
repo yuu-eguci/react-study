@@ -8,9 +8,11 @@ import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 function VariousControlsPage() {
+  const { t } = useTranslation()
   const user = useAuthRedirect()
   const navigate = useNavigate()
 
@@ -40,7 +42,7 @@ function VariousControlsPage() {
           onClick={() => navigate(`/?user=${encodeURIComponent(user || '')}`)}
           sx={{ marginBottom: 2 }}
         >
-          戻る
+          {t('戻る')}
         </Button>
       </Box>
 

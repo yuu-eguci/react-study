@@ -13,6 +13,7 @@ import {
   Typography
 } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const COLORS: Array<'red' | 'green' | 'blue'> = ['red', 'green', 'blue']
 const COLOR_COMBINATIONS = ['yellow', 'magenta', 'cyan', 'white']
@@ -28,6 +29,7 @@ type RGBCheckBoxQuizComponentProps = {
 }
 
 const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) => {
+  const { t } = useTranslation()
   const [checkedColors, setCheckedColors] = useState<CheckedColors>({
     red: false,
     green: false,
@@ -89,13 +91,13 @@ const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) 
       }}
     >
       <Typography variant="caption" sx={{ marginBottom: 2 }}>
-        This is a sample for the checkboxes.
+        {t('This is a sample for the checkboxes.')}
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 2 }}>
         <Typography variant="h6" sx={{ marginRight: 1 }}>
-          このアイコンを作ってみよう
+          {t('このアイコンを作ってみよう')}
         </Typography>
-        <HelpIconWithDialog message="チェックボックスの色を組み合わせて、同じ色を作ってみましょう！" />
+        <HelpIconWithDialog message={t('チェックボックスの色を組み合わせて、同じ色を作ってみましょう！')} />
       </Box>
 
       <Paper elevation={3} sx={{ display: 'inline-block', padding: 2, borderRadius: '50%', marginBottom: 4 }}>
@@ -129,22 +131,22 @@ const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) 
         disabled={isLocked}
         sx={{ width: '100%' }}
       >
-        回答する
+        {t('回答する')}
       </Button>
 
       <Dialog
         open={openResultDialog}
         onClose={handleDialogClose}
       >
-        <DialogTitle>結果</DialogTitle>
+        <DialogTitle>{t('結果')}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             {activeColor === randomColor
               ? <>
-                  正解です！あなたは光の三原色を完全に理解しています。<br />
-                  次の問題に進みましょう……
+                  {t('正解です！あなたは光の三原色を完全に理解しています。')}<br />
+                  {t('次の問題に進みましょう……')}
                 </>
-              : '残念、不正解です……！'}
+              : t('残念、不正解です……！')}
           </DialogContentText>
 
         </DialogContent>

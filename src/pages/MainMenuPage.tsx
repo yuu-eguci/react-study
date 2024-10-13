@@ -4,7 +4,8 @@ import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 // アイコンのインポート
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -17,6 +18,7 @@ import seasideImg from '@/assets/images/bg_seaside.jpg'
 import wavingImg from '@/assets/images/bg_waving.jpg'
 
 function MainMenuPage() {
+  const { t } = useTranslation()
   const user = useAuthRedirect()
 
   const [loading, setLoading] = useState(false)
@@ -32,21 +34,21 @@ function MainMenuPage() {
   const images = [
     {
       url: cityImg,
-      title: 'メインの入力ページ',
+      title: t('メインの入力ページ'),
       width: '100%',
       link: `/table?user=${encodeURIComponent(user || '')}`,
       icon: <TableChartIcon />,
     },
     {
       url: seasideImg,
-      title: 'いろいろなコントロール',
+      title: t('いろいろなコントロール'),
       width: '100%',
       link: `/various-controls?user=${encodeURIComponent(user || '')}`,
       icon: <ToysIcon />,
     },
     {
       url: wavingImg,
-      title: 'ログアウト',
+      title: t('ログアウト'),
       width: '100%',
       link: '/login',
       icon: <LogoutIcon />,
@@ -67,7 +69,7 @@ function MainMenuPage() {
     >
       {user && (
         <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-          ようこそ {user} さん
+          {t('ようこそ')} {user} {t('さん')} {/* t でラップ */}
         </Typography>
       )}
       <Box

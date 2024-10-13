@@ -14,6 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 // 画像のインポート（@/assets/images の中にある画像を使う場合）
@@ -29,6 +30,9 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 function LoginPage() {
+  const navigate = useNavigate()
+  const { t } = useTranslation()
+
   const [loginId, setLoginId] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -39,26 +43,22 @@ function LoginPage() {
     [umbrellaImg, waterpaintingImg, birdImg, countrysideImg, nightskyImg, treesImg][Math.floor(Math.random() * 6)]
   )
 
-  const navigate = useNavigate()
-
   const handleLogin = () => {
     if (!agreeToTerms) {
-      alert('利用規約に同意してください')
+      alert(t('利用規約に同意してください'))
       return
     }
 
     setLoading(true)
 
-    // ローディングのふりをして少しだけ待つよ
     setTimeout(() => {
       setLoading(false)
       setLoginSuccess(true)
 
-      // ログイン成功アイコンを少し表示した後、ルートに遷移する
       setTimeout(() => {
         navigate(`/?user=${encodeURIComponent(loginId)}`)
       }, 2000)
-    }, 2000) // 2秒間ローディングのふりをする
+    }, 2000)
   }
 
   const isDisabled = !loginId || !password || !agreeToTerms || loading
@@ -111,10 +111,10 @@ function LoginPage() {
             }}
           >
             <Typography variant="h5" component="div">
-              素敵で小さなサンプルウェブページ
+              {t('素敵で小さなサンプルウェブページ')}
             </Typography>
             <Typography variant="caption">
-              Lovely Little Sample Web Page
+              {t('Lovely Little Sample Web Page')}
             </Typography>
           </Box>
       </Box>
@@ -129,7 +129,7 @@ function LoginPage() {
         }}
       >
         <TextField
-          label="ログイン ID"
+          label={t('ログイン ID')}
           variant="outlined"
           fullWidth
           value={loginId}
@@ -141,7 +141,7 @@ function LoginPage() {
           }}
         />
         <TextField
-          label="パスワード"
+          label={t('パスワード')}
           variant="outlined"
           type={showPassword ? 'text' : 'password'}
           fullWidth
@@ -174,7 +174,7 @@ function LoginPage() {
               onChange={(e) => setAgreeToTerms(e.target.checked)}
             />
           }
-          label="利用規約に同意する"
+          label={t('利用規約に同意する')}
         />
         {loading ? (
           <LoginLoadingButton disabled={isDisabled} />
@@ -185,7 +185,6 @@ function LoginPage() {
         )}
       </FormControl>
 
-      {/* ローディング中はオーバーレイを表示 */}
       <Backdrop
         sx={{
           color: '#fff',

@@ -23,6 +23,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 const items: { [key: string]: { id: string; name: string; unitPrice: number } } = {
@@ -40,6 +41,7 @@ const items: { [key: string]: { id: string; name: string; unitPrice: number } } 
 const itemOptions = Object.keys(items)
 
 function TablePage() {
+  const { t } = useTranslation()
   const user = useAuthRedirect()
   const navigate = useNavigate()
 
@@ -47,7 +49,7 @@ function TablePage() {
   const [selectedItemId, setSelectedItemId] = useState('')
   // 品名 (品番 -> 自動入力)
   const itemName = useMemo(() => {
-    return items[selectedItemId]?.name || '品番を入力してください'
+    return items[selectedItemId]?.name || t('品番を入力してください')
   }, [selectedItemId])
   // 単価 (品番 -> 自動入力)
   const unitPrice = useMemo(() => {
@@ -66,7 +68,7 @@ function TablePage() {
   // 表にデータを追加 -> フォームをクリア
   const handleAddData = () => {
     if (!selectedItemId || !itemName || quantity <= 0 || unitPrice <= 0) {
-      alert('すべての値を正しく入力してください')
+      alert(t('すべての値を正しく入力してください'))
       return
     }
 
@@ -104,7 +106,7 @@ function TablePage() {
           onClick={() => navigate(`/?user=${encodeURIComponent(user || '')}`)}
           sx={{ marginBottom: 2 }}
         >
-          戻る
+          {t('戻る')}
         </Button>
 
         <Button
@@ -127,7 +129,7 @@ function TablePage() {
           }}
           sx={{ marginBottom: 2 }}
         >
-          テスト
+          {t('テスト')}
         </Button>
       </Box>
 
@@ -148,7 +150,7 @@ function TablePage() {
           }}
         >
           <Typography variant="h6" component="div">
-            入力フォーム
+            {t('入力フォーム')}
           </Typography>
           <FormControl
             fullWidth
@@ -156,12 +158,12 @@ function TablePage() {
               gap: 2,
             }}
           >
-            <InputLabel id="product-select-label">品番</InputLabel>
+            <InputLabel id="product-select-label">{t('品番')}</InputLabel>
             <Select
               labelId="product-select-label"
               id="product-select"
               value={selectedItemId}
-              label="品番"
+              label={t('品番')}
               onChange={(e: SelectChangeEvent) => setSelectedItemId(e.target.value)}
             >
               {itemOptions.map((itemId) => (
@@ -171,7 +173,7 @@ function TablePage() {
               ))}
             </Select>
             <TextField
-              label="品名"
+              label={t('品名')}
               variant="filled"
               value={itemName}
               slotProps={{
@@ -181,14 +183,14 @@ function TablePage() {
               }}
             />
             <TextField
-              label="数量"
+              label={t('数量')}
               type="number"
               variant="outlined"
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
             />
             <TextField
-              label="単価"
+              label={t('単価')}
               type="number"
               variant="filled"
               value={unitPrice}
@@ -199,7 +201,7 @@ function TablePage() {
               }}
             />
             <TextField
-              label="金額 (数量 x 単価)"
+              label={t('金額 (数量 x 単価)')}
               type="number"
               variant="filled"
               value={sumAmount}
@@ -210,7 +212,7 @@ function TablePage() {
               }}
             />
             <Button variant="contained" color="primary" onClick={handleAddData}>
-              データを追加
+              {t('データを追加')}
             </Button>
           </FormControl>
         </Box>
@@ -242,11 +244,11 @@ function TablePage() {
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell>品番</TableCell>
-                  <TableCell>品名</TableCell>
-                  <TableCell>数量</TableCell>
-                  <TableCell>単価 (￥)</TableCell>
-                  <TableCell>金額 (￥)</TableCell>
+                  <TableCell>{t('品番')}</TableCell>
+                  <TableCell>{t('品名')}</TableCell>
+                  <TableCell>{t('数量')}</TableCell>
+                  <TableCell>{t('単価 (￥)')}</TableCell>
+                  <TableCell>{t('金額 (￥)')}</TableCell>
                   <TableCell>
                     <Button
                       variant="contained"
@@ -257,25 +259,25 @@ function TablePage() {
                         setOpenDialog(true)
                       }}
                     >
-                      クリア
+                      {t('クリア')}
                     </Button>
 
                     <Dialog
                       open={openDialog}
                       onClose={() => onConfirmClearData(false)}
                     >
-                      <DialogTitle>確認</DialogTitle>
+                      <DialogTitle>{t('確認')}</DialogTitle>
                       <DialogContent>
                         <DialogContentText>
-                          データをクリアしますか？
+                          {t('データをクリアしますか？')}
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>
                         <Button onClick={() => onConfirmClearData(false)} color="primary">
-                          キャンセル
+                          {t('キャンセル')}
                         </Button>
                         <Button onClick={() => onConfirmClearData(true)} color="secondary">
-                          OK
+                          {t('OK')}
                         </Button>
                       </DialogActions>
                     </Dialog>
