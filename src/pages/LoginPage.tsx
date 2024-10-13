@@ -101,9 +101,10 @@ function LoginPage() {
               height: '100%',
               bgcolor: 'rgba(0, 0, 0, 0.3)',
               display: 'flex',
-              flexDirection: 'column', // 縦に並べる
-              alignItems: 'center',
-              justifyContent: 'center',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              padding: 2,
               color: 'white',
               fontSize: '24px',
               fontWeight: 'bold',
