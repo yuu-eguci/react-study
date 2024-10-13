@@ -1,6 +1,17 @@
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
-import { Box, Button, Checkbox, Paper, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Paper,
+  Typography
+} from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 
 const COLORS: Array<'red' | 'green' | 'blue'> = ['red', 'green', 'blue']
@@ -25,6 +36,8 @@ const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) 
 
   const [randomColor, setRandomColor] = useState('red')
   const [isLocked, setIsLocked] = useState(false)
+
+  const [openResultDialog, setOpenResultDialog] = useState(false)
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * COLOR_COMBINATIONS.length)
@@ -51,15 +64,16 @@ const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) 
   }, [checkedColors])
 
   const handleSubmit = () => {
+    setOpenResultDialog(true)
     if (activeColor === randomColor) {
-      alert('正解です！あなたは光の三原色を完全に理解しています。')
       setIsLocked(true)
-      // 親コンポーネントに正解を通知する
-      if (onCorrect) {
-        onCorrect()
-      }
-    } else {
-      alert('残念、不正解です……！')
+    }
+  }
+
+  const handleDialogClose = () => {
+    setOpenResultDialog(false)
+    if (activeColor === randomColor && onCorrect) {
+      onCorrect()
     }
   }
 
@@ -113,6 +127,29 @@ const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) 
       >
         回答する
       </Button>
+
+      <Dialog
+        open={openResultDialog}
+        onClose={handleDialogClose}
+      >
+        <DialogTitle>結果</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {activeColor === randomColor
+              ? <>
+                  正解です！あなたは光の三原色を完全に理解しています。<br />
+                  次の問題に進みましょう……
+                </>
+              : '残念、不正解です……！'}
+          </DialogContentText>
+
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Box sx={{ display: 'flex', justifyContent: 'right', marginTop: 2 }}>
         <HelpOutlineIcon
