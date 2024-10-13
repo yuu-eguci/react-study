@@ -2,6 +2,11 @@ import { useAuthRedirect } from '@/hooks/useAuthRedirect'
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -53,6 +58,9 @@ function TablePage() {
   // 金額
   const sumAmount = useMemo(() => unitPrice * quantity, [unitPrice, quantity])
 
+  // Dialog を開く
+  const [openDialog, setOpenDialog] = useState(false)
+
   const [tableData, setTableData] = useState<{ id: string, name: string, quantity: number, unitPrice: number, sumAmount: number }[]>([])
 
   // 表にデータを追加 -> フォームをクリア
@@ -73,6 +81,13 @@ function TablePage() {
     setTableData((prevData) => [...prevData, ...newDataArray])
     setSelectedItemId('')
     setQuantity(0)
+  }
+
+  const onConfirmClearData = (confirm: boolean) => {
+    setOpenDialog(false)
+    if (confirm && tableData.length > 0) {
+      setTableData([])
+    }
   }
 
   return (
@@ -237,14 +252,33 @@ function TablePage() {
                       variant="contained"
                       size="small"
                       color="secondary"
+                      disabled={tableData.length === 0}
                       onClick={() => {
-                        if (tableData.length > 0 && window.confirm('データをクリアしますか？')) {
-                          setTableData([])
-                        }
+                        setOpenDialog(true)
                       }}
                     >
                       クリア
                     </Button>
+
+                    <Dialog
+                      open={openDialog}
+                      onClose={() => onConfirmClearData(false)}
+                    >
+                      <DialogTitle>確認</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          データをクリアしますか？
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={() => onConfirmClearData(false)} color="primary">
+                          キャンセル
+                        </Button>
+                        <Button onClick={() => onConfirmClearData(true)} color="secondary">
+                          OK
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </TableCell>
 
                 </TableRow>
