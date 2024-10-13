@@ -1,8 +1,10 @@
 import Button from '@/components/Button'
 import formatDate from '@/utils/formatDate'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function HomePage() {
+  const { t } = useTranslation()
   const [formattedDate, setFormattedDate] = useState<string>('')
 
   useEffect(() => {
@@ -12,13 +14,13 @@ function HomePage() {
   }, [])
 
   const handleClick = () => {
-    alert('Button clicked!')
+    alert(t('Button clicked!'))
   }
 
   return (
     <div>
-      <h1>Welcome to the Home Page - {formattedDate}</h1>
-      <Button label="Click Me" onClick={handleClick} />
+      <h1>{t('Welcome to the Home Page')} - {formattedDate}</h1>
+      <Button label={t('Click Me')} onClick={handleClick} />
     </div>
   )
 }
