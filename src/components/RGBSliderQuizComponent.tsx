@@ -1,5 +1,5 @@
+import HelpIconWithDialog from '@/components/HelpIconWithDialog'
 import OfficialIcon from '@/components/OfficialIcon'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import {
   Box,
   Button,
@@ -60,9 +60,22 @@ const RGBSliderQuizComponent = () => {
       <Typography variant="caption" sx={{ marginBottom: 2 }}>
         This is a sample for the sliders.
       </Typography>
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        最終問題: このアイコンを作ってみよう
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 2 }}>
+        <Typography variant="h6" sx={{ marginRight: 1 }}>
+          最終問題: このアイコンを作ってみよう
+        </Typography>
+        <HelpIconWithDialog
+          message={
+            <>
+              ええ、無茶ですとも。<br />
+              これは Automation プログラムによる回答を期待しているのです。がんばって正解してください。<br />
+              ただ……ええ、作ってる私自身がテストできないのでここに答えを書いときマス。<br />
+              今回の答えは: {randomColor}
+            </>
+          }
+        />
+      </Box>
+
       <Paper elevation={3} sx={{ display: 'inline-block', padding: 2, borderRadius: '50%', marginBottom: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <OfficialIcon width={100} height={100} fill={randomColor} />
@@ -130,19 +143,6 @@ const RGBSliderQuizComponent = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Box sx={{ display: 'flex', justifyContent: 'right', marginTop: 2 }}>
-        <HelpOutlineIcon
-          color="secondary"
-          onClick={() => {
-            alert(
-              'ええ、無茶ですとも。本問題は Automation による自動回答を期待しているのです。'
-              + 'でも……ええ、作ってる私自身がテストできないのでここに答えを書いトキマス。'
-              + `今回の答えは: ${randomColor}`
-            )
-          }}
-        />
-      </Box>
     </Paper>
   )
 }

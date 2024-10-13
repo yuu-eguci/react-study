@@ -1,5 +1,5 @@
+import HelpIconWithDialog from '@/components/HelpIconWithDialog'
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import {
   Box,
   Button,
@@ -91,9 +91,13 @@ const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) 
       <Typography variant="caption" sx={{ marginBottom: 2 }}>
         This is a sample for the checkboxes.
       </Typography>
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        このアイコンを作ってみよう
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 2 }}>
+        <Typography variant="h6" sx={{ marginRight: 1 }}>
+          このアイコンを作ってみよう
+        </Typography>
+        <HelpIconWithDialog message="チェックボックスの色を組み合わせて、同じ色を作ってみましょう！" />
+      </Box>
+
       <Paper elevation={3} sx={{ display: 'inline-block', padding: 2, borderRadius: '50%', marginBottom: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <BrightnessHighIcon sx={{ fontSize: 100, color: randomColor }} />
@@ -150,15 +154,6 @@ const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) 
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Box sx={{ display: 'flex', justifyContent: 'right', marginTop: 2 }}>
-        <HelpOutlineIcon
-          color="secondary"
-          onClick={() => {
-            alert('チェックボックスの色を組み合わせて、同じ色を作ってみましょう！')
-          }}
-        />
-      </Box>
     </Paper>
   )
 }
