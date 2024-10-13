@@ -1,12 +1,25 @@
 import OfficialIcon from '@/components/OfficialIcon'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
-import { Box, Button, Paper, Slider, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Paper,
+  Slider,
+  Typography
+} from '@mui/material'
 import { useEffect, useState } from 'react'
 
 const RGBSliderQuizComponent = () => {
   const [rgbValues, setRgbValues] = useState({ red: 0, green: 0, blue: 0 })
   const [randomColor, setRandomColor] = useState('rgb(0, 0, 0)')
   const [isLocked, setIsLocked] = useState(false)
+
+  const [openResultDialog, setOpenResultDialog] = useState(false)
 
   useEffect(() => {
     const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
@@ -23,11 +36,13 @@ const RGBSliderQuizComponent = () => {
   const currentColor = `rgb(${rgbValues.red}, ${rgbValues.green}, ${rgbValues.blue})`
 
   const handleSubmit = () => {
+    setOpenResultDialog(true)
+  }
+
+  const handleDialogClose = () => {
+    setOpenResultDialog(false)
     if (currentColor === randomColor) {
-      alert('正解です！あなたは光の三原色の支配者です。')
       setIsLocked(true)
-    } else {
-      alert('残念、不正解です……！')
     }
   }
 
@@ -96,6 +111,25 @@ const RGBSliderQuizComponent = () => {
       >
         回答する
       </Button>
+
+      <Dialog
+        open={openResultDialog}
+        onClose={handleDialogClose}
+      >
+        <DialogTitle>結果</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {currentColor === randomColor
+              ? '正解です！あなたは光の三原色の支配者です。'
+              : '残念、不正解です……！'}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Box sx={{ display: 'flex', justifyContent: 'right', marginTop: 2 }}>
         <HelpOutlineIcon
