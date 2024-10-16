@@ -11,6 +11,9 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
+// "クイズの答えを固定してほしい" という無粋な要望に対応する定数。
+const FIXED_ANSWER = true
+
 function VariousControlsPage() {
   const { t } = useTranslation()
   const user = useAuthRedirect()
@@ -49,9 +52,9 @@ function VariousControlsPage() {
       {/* 光の三原色のクイズ */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         {/* 1問目 */}
-        {showFirstQuiz && <RGBCheckBoxQuizComponent onCorrect={handleQuizCorrect} />}
+        {showFirstQuiz && <RGBCheckBoxQuizComponent onCorrect={handleQuizCorrect} fixedAnswer={FIXED_ANSWER} />}
         {/* 2問目 */}
-        {!showFirstQuiz && <RGBRadioGroupQuizComponent />}
+        {!showFirstQuiz && <RGBRadioGroupQuizComponent fixedAnswer={FIXED_ANSWER} />}
       </Box>
 
       {/* ローディング */}

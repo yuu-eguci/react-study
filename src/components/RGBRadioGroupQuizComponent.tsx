@@ -17,21 +17,29 @@ import {
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+type RGBRadioGroupQuizComponentProps = {
+  fixedAnswer?: boolean
+}
+
 const RGB_OPTIONS = [51, 102, 153, 204]
 
-const RGBRadioGroupQuizComponent = () => {
+const RGBRadioGroupQuizComponent = ({ fixedAnswer }: RGBRadioGroupQuizComponentProps) => {
   const { t } = useTranslation()
   const [rgbValues, setRgbValues] = useState({ red: 51, green: 102, blue: 153 })
-  const [randomColor, setRandomColor] = useState('rgb(51,102,153)')
+  const [randomColor, setRandomColor] = useState('rgb(51, 102, 153)')
   const [isLocked, setIsLocked] = useState(false)
 
   const [openResultDialog, setOpenResultDialog] = useState(false)
 
   // ランダムカラーの生成
   useEffect(() => {
-    const randomColor = `rgb(${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]},${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]},${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]})`
-    setRandomColor(randomColor)
-  }, [])
+    if (fixedAnswer) {
+      setRandomColor('rgb(153, 153, 102)')
+    } else {
+      const randomColor = `rgb(${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]}, ${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]}, ${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]})`
+      setRandomColor(randomColor)
+    }
+  }, [fixedAnswer])
 
   const handleRadioChange = (color: 'red' | 'green' | 'blue') => (event: React.ChangeEvent<HTMLInputElement>) => {
     setRgbValues((prev) => ({
@@ -40,7 +48,7 @@ const RGBRadioGroupQuizComponent = () => {
     }))
   }
 
-  const currentColor = `rgb(${rgbValues.red},${rgbValues.green},${rgbValues.blue})`
+  const currentColor = `rgb(${rgbValues.red}, ${rgbValues.green}, ${rgbValues.blue})`
 
   const handleSubmit = () => {
     setOpenResultDialog(true)
@@ -74,9 +82,8 @@ const RGBRadioGroupQuizComponent = () => {
         <HelpIconWithDialog
           message={
             <>
-              {t('ええ、無茶ですとも。')}<br />
-              {t('これは Automation プログラムによる回答を期待しているのです。がんばって正解してください。')}<br />
-              {t('ただ……ええ、作ってる私自身がテストできないのでここに答えを書いときマス。')}<br />
+              {t('チェックボックスの色を組み合わせて、同じ色を作ってみましょう！')}<br />
+              {t('……なかなか難しいですね。作ってる私自身がテストできないのでここに答えを書いておきます。')}<br />
               {t('今回の答えは')}: {randomColor}
             </>
           }

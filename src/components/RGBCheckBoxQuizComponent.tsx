@@ -26,9 +26,10 @@ type CheckedColors = {
 
 type RGBCheckBoxQuizComponentProps = {
   onCorrect: () => void
+  fixedAnswer?: boolean
 }
 
-const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) => {
+const RGBCheckBoxQuizComponent = ({ onCorrect, fixedAnswer }: RGBCheckBoxQuizComponentProps) => {
   const { t } = useTranslation()
   const [checkedColors, setCheckedColors] = useState<CheckedColors>({
     red: false,
@@ -42,9 +43,13 @@ const RGBCheckBoxQuizComponent = ({ onCorrect }: RGBCheckBoxQuizComponentProps) 
   const [openResultDialog, setOpenResultDialog] = useState(false)
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * COLOR_COMBINATIONS.length)
-    setRandomColor(COLOR_COMBINATIONS[randomIndex])
-  }, [])
+    if (fixedAnswer) {
+      setRandomColor('white')
+    } else {
+      const randomIndex = Math.floor(Math.random() * COLOR_COMBINATIONS.length)
+      setRandomColor(COLOR_COMBINATIONS[randomIndex])
+    }
+  }, [fixedAnswer])
 
   const handleCheckboxChange = (color: 'red' | 'green' | 'blue') => {
     setCheckedColors((prev) => ({

@@ -15,7 +15,11 @@ import {
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const RGBSliderQuizComponent = () => {
+type RGBSliderQuizComponentProps = {
+  fixedAnswer?: boolean
+}
+
+const RGBSliderQuizComponent = ({ fixedAnswer }: RGBSliderQuizComponentProps) => {
   const { t } = useTranslation()
   const [rgbValues, setRgbValues] = useState({ red: 0, green: 0, blue: 0 })
   const [randomColor, setRandomColor] = useState('rgb(0, 0, 0)')
@@ -24,9 +28,13 @@ const RGBSliderQuizComponent = () => {
   const [openResultDialog, setOpenResultDialog] = useState(false)
 
   useEffect(() => {
-    const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
-    setRandomColor(randomColor)
-  }, [])
+    if (fixedAnswer) {
+      setRandomColor('rgb(250, 123, 56)')
+    } else {
+      const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
+      setRandomColor(randomColor)
+    }
+  }, [fixedAnswer])
 
   const handleSliderChange = (color: 'red' | 'green' | 'blue') => (_: Event, newValue: number | number[]) => {
     setRgbValues((prev) => ({
