@@ -1,5 +1,5 @@
 import RGBCheckBoxQuizComponent from '@/components/RGBCheckBoxQuizComponent'
-import RGBSliderQuizComponent from '@/components/RGBSliderQuizComponent'
+import RGBRadioGroupQuizComponent from '@/components/RGBRadioGroupQuizComponent'
 import { useAuthRedirect } from '@/hooks/useAuthRedirect'
 import {
   Button
@@ -51,7 +51,7 @@ function VariousControlsPage() {
         {/* 1問目 */}
         {showFirstQuiz && <RGBCheckBoxQuizComponent onCorrect={handleQuizCorrect} />}
         {/* 2問目 */}
-        {!showFirstQuiz && <RGBSliderQuizComponent />}
+        {!showFirstQuiz && <RGBRadioGroupQuizComponent />}
       </Box>
 
       {/* ローディング */}

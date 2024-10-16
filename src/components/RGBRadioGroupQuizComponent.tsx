@@ -8,34 +8,39 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControlLabel,
   Paper,
-  Slider,
+  Radio,
+  RadioGroup,
   Typography
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+const RGB_OPTIONS = [51, 102, 153, 204]
+
 const RGBRadioGroupQuizComponent = () => {
   const { t } = useTranslation()
-  const [rgbValues, setRgbValues] = useState({ red: 0, green: 0, blue: 0 })
-  const [randomColor, setRandomColor] = useState('rgb(0, 0, 0)')
+  const [rgbValues, setRgbValues] = useState({ red: 51, green: 102, blue: 153 })
+  const [randomColor, setRandomColor] = useState('rgb(51,102,153)')
   const [isLocked, setIsLocked] = useState(false)
 
   const [openResultDialog, setOpenResultDialog] = useState(false)
 
+  // ランダムカラーの生成
   useEffect(() => {
-    const randomColor = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
+    const randomColor = `rgb(${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]},${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]},${RGB_OPTIONS[Math.floor(Math.random() * RGB_OPTIONS.length)]})`
     setRandomColor(randomColor)
   }, [])
 
-  const handleSliderChange = (color: 'red' | 'green' | 'blue') => (_: Event, newValue: number | number[]) => {
+  const handleRadioChange = (color: 'red' | 'green' | 'blue') => (event: React.ChangeEvent<HTMLInputElement>) => {
     setRgbValues((prev) => ({
       ...prev,
-      [color]: newValue as number,
+      [color]: Number(event.target.value),
     }))
   }
 
-  const currentColor = `rgb(${rgbValues.red}, ${rgbValues.green}, ${rgbValues.blue})`
+  const currentColor = `rgb(${rgbValues.red},${rgbValues.green},${rgbValues.blue})`
 
   const handleSubmit = () => {
     setOpenResultDialog(true)
@@ -60,7 +65,7 @@ const RGBRadioGroupQuizComponent = () => {
       }}
     >
       <Typography variant="caption" sx={{ marginBottom: 2 }}>
-        {t('This is a sample for the sliders.')}
+        {t('This is a sample for the radio group.')}
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 2 }}>
         <Typography variant="h6" sx={{ marginRight: 1 }}>
@@ -85,31 +90,43 @@ const RGBRadioGroupQuizComponent = () => {
       </Paper>
 
       <Box sx={{ marginBottom: 4 }}>
-        <Typography>{t('R')}: {rgbValues.red}</Typography>
-        <Slider
+        <Typography>{t('RED')}</Typography>
+        <RadioGroup
+          row
           value={rgbValues.red}
-          onChange={handleSliderChange('red')}
-          min={0}
-          max={255}
-          disabled={isLocked}
-        />
-        <Typography>{t('G')}: {rgbValues.green}</Typography>
-        <Slider
+          onChange={handleRadioChange('red')}
+          sx={{ justifyContent: 'center' }}
+        >
+          {RGB_OPTIONS.map((value) => (
+            <FormControlLabel key={value} value={value} control={<Radio />} label={value} />
+          ))}
+        </RadioGroup>
+
+        <Typography>{t('GREEN')}</Typography>
+        <RadioGroup
+          row
           value={rgbValues.green}
-          onChange={handleSliderChange('green')}
-          min={0}
-          max={255}
-          disabled={isLocked}
-        />
-        <Typography>{t('B')}: {rgbValues.blue}</Typography>
-        <Slider
+          onChange={handleRadioChange('green')}
+          sx={{ justifyContent: 'center' }}
+        >
+          {RGB_OPTIONS.map((value) => (
+            <FormControlLabel key={value} value={value} control={<Radio />} label={value} />
+          ))}
+        </RadioGroup>
+
+        <Typography>{t('BLUE')}</Typography>
+        <RadioGroup
+          row
           value={rgbValues.blue}
-          onChange={handleSliderChange('blue')}
-          min={0}
-          max={255}
-          disabled={isLocked}
-        />
+          onChange={handleRadioChange('blue')}
+          sx={{ justifyContent: 'center' }}
+        >
+          {RGB_OPTIONS.map((value) => (
+            <FormControlLabel key={value} value={value} control={<Radio />} label={value} />
+          ))}
+        </RadioGroup>
       </Box>
+
 
       <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 4 }}>
         <OfficialIcon width={100} height={100} fill={currentColor} />
