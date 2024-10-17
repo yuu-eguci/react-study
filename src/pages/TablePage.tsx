@@ -50,7 +50,7 @@ function TablePage() {
   // 品名 (品番 -> 自動入力)
   const itemName = useMemo(() => {
     return items[selectedItemId]?.name || t('品番を入力してください')
-  }, [selectedItemId])
+  }, [selectedItemId, t])
   // 単価 (品番 -> 自動入力)
   const unitPrice = useMemo(() => {
     return items[selectedItemId]?.unitPrice || 0
@@ -109,28 +109,63 @@ function TablePage() {
           {t('戻る')}
         </Button>
 
-        <Button
-          variant="outlined"
-          size="small"
-          color="secondary"
-          onClick={() => {
-            const newData = Object.keys(items).map((key) => {
-              const item = items[key]
-              return {
-                id: item.id,
-                name: item.name,
-                quantity: 1,
-                unitPrice: item.unitPrice,
-                sumAmount: item.unitPrice * 1
-              }
-            })
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+          <Button
+            variant="contained"
+            size="small"
+            color="secondary"
+            sx={{ marginBottom: 2 }}
+            disabled={tableData.length === 0}
+            onClick={() => {
+              setOpenDialog(true)
+            }}
+          >
+            {t('クリア')}
+          </Button>
 
-            setTableData((prevData) => [...prevData, ...newData])
-          }}
-          sx={{ marginBottom: 2 }}
-        >
-          {t('テスト')}
-        </Button>
+          <Dialog
+            open={openDialog}
+            onClose={() => onConfirmClearData(false)}
+          >
+            <DialogTitle>{t('確認')}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                {t('データをクリアしますか？')}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => onConfirmClearData(false)} color="primary">
+                {t('キャンセル')}
+              </Button>
+              <Button onClick={() => onConfirmClearData(true)} color="secondary">
+                {t('OK')}
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <Button
+            variant="outlined"
+            size="small"
+            color="secondary"
+            onClick={() => {
+              const newData = Object.keys(items).map((key) => {
+                const item = items[key]
+                return {
+                  id: item.id,
+                  name: item.name,
+                  quantity: 1,
+                  unitPrice: item.unitPrice,
+                  sumAmount: item.unitPrice * 1
+                }
+              })
+
+              setTableData((prevData) => [...prevData, ...newData])
+            }}
+            sx={{ marginBottom: 2 }}
+          >
+            {t('+ テストデータ')}
+          </Button>
+        </Box>
       </Box>
 
       <Box
@@ -249,40 +284,6 @@ function TablePage() {
                   <TableCell>{t('数量')}</TableCell>
                   <TableCell>{t('単価 (￥)')}</TableCell>
                   <TableCell>{t('金額 (￥)')}</TableCell>
-                  <TableCell>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="secondary"
-                      disabled={tableData.length === 0}
-                      onClick={() => {
-                        setOpenDialog(true)
-                      }}
-                    >
-                      {t('クリア')}
-                    </Button>
-
-                    <Dialog
-                      open={openDialog}
-                      onClose={() => onConfirmClearData(false)}
-                    >
-                      <DialogTitle>{t('確認')}</DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          {t('データをクリアしますか？')}
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={() => onConfirmClearData(false)} color="primary">
-                          {t('キャンセル')}
-                        </Button>
-                        <Button onClick={() => onConfirmClearData(true)} color="secondary">
-                          {t('OK')}
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </TableCell>
-
                 </TableRow>
               </TableHead>
 
@@ -294,7 +295,6 @@ function TablePage() {
                     <TableCell align="right">{data.quantity.toLocaleString()}</TableCell>
                     <TableCell align="right">{data.unitPrice.toLocaleString()}</TableCell>
                     <TableCell align="right">{data.sumAmount.toLocaleString()}</TableCell>
-                    <TableCell></TableCell>
                     </TableRow>
                 ))}
               </TableBody>
