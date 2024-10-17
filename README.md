@@ -11,3 +11,11 @@ Vue-cli とか Nuxt の自分用虎の巻はすでにあるよね。 React バ�
 ## このリポジトリが含むもの
 
 - Vite + React + TypeScript + MUI + i18n + vite-tsconfig-paths + GitHub Pages
+
+## Commands
+
+```bash
+yarn dev
+
+yarn run i18next "./src/App.tsx" "./src/**/*.tsx" --config "./i18next-parser.config.js"
+```
