@@ -53,18 +53,18 @@ function TablePage() {
     return items[inputItemId]?.unitPrice || 0
   }, [inputItemId])
   // 数量
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState<number | string>('');
   // 金額
-  const sumAmount = useMemo(() => unitPrice * quantity, [unitPrice, quantity])
+  const sumAmount = useMemo(() => unitPrice * Number(quantity), [unitPrice, quantity])
 
   // Dialog を開く
   const [openDialog, setOpenDialog] = useState(false)
 
-  const [tableData, setTableData] = useState<{ id: string, name: string, quantity: number, unitPrice: number, sumAmount: number }[]>([])
+  const [tableData, setTableData] = useState<{ id: string, name: string, quantity: number | string, unitPrice: number, sumAmount: number }[]>([])
 
   // 表にデータを追加 -> フォームをクリア
   const handleAddData = () => {
-    if (!inputItemId || !itemName || quantity <= 0 || unitPrice <= 0) {
+    if (!inputItemId || !itemName || Number(quantity) <= 0 || unitPrice <= 0) {
       alert(t('すべての値を正しく入力してください'))
       return
     }
@@ -215,7 +215,18 @@ function TablePage() {
               type="number"
               variant="outlined"
               value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
+              // 入力しやすいように、フォーカス時に 0 を消す。
+              onFocus={() => {
+                if (quantity === 0) setQuantity('');
+              }}
+              onChange={(e) => {
+                const value = e.target.value;
+                setQuantity(value === '' ? '' : Number(value));
+              }}
+              // フォーカスが外れた時に、空の場合は 0 を入れる。
+              onBlur={() => {
+                if (quantity === '') setQuantity(0);
+              }}
             />
             <TextField
               label={t('単価')}
