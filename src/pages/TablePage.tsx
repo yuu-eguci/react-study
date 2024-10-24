@@ -1,3 +1,4 @@
+import IdHintChip from '@/components/IdHintChip'
 import { useAuthRedirect } from '@/hooks/useAuthRedirect'
 import {
   Box,
@@ -184,9 +185,12 @@ function TablePage() {
             gap: 2,
           }}
         >
-          <Typography variant="h6" component="div">
-            {t('入力フォーム')}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
+            <Typography variant="h6" component="div">
+              {t('入力フォーム')}
+            </Typography>
+            <IdHintChip itemIds={itemOptions} />
+          </Box>
           <FormControl
             fullWidth
             sx={{
