@@ -9,11 +9,7 @@ import {
   DialogContentText,
   DialogTitle,
   FormControl,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
-  SelectChangeEvent,
   Table,
   TableBody,
   TableCell,
@@ -47,15 +43,15 @@ function TablePage() {
   const navigate = useNavigate()
 
   // 品番
-  const [selectedItemId, setSelectedItemId] = useState('')
+  const [inputItemId, setInputItemId] = useState('')
   // 品名 (品番 -> 自動入力)
   const itemName = useMemo(() => {
-    return items[selectedItemId]?.name || t('品番を入力してください')
-  }, [selectedItemId, t])
+    return items[inputItemId]?.name || t('品番を入力してください')
+  }, [inputItemId, t])
   // 単価 (品番 -> 自動入力)
   const unitPrice = useMemo(() => {
-    return items[selectedItemId]?.unitPrice || 0
-  }, [selectedItemId])
+    return items[inputItemId]?.unitPrice || 0
+  }, [inputItemId])
   // 数量
   const [quantity, setQuantity] = useState(0)
   // 金額
@@ -68,21 +64,21 @@ function TablePage() {
 
   // 表にデータを追加 -> フォームをクリア
   const handleAddData = () => {
-    if (!selectedItemId || !itemName || quantity <= 0 || unitPrice <= 0) {
+    if (!inputItemId || !itemName || quantity <= 0 || unitPrice <= 0) {
       alert(t('すべての値を正しく入力してください'))
       return
     }
 
     const testLength = 1
     const newDataArray = Array.from({ length: testLength }, () => ({
-      id: selectedItemId,
+      id: inputItemId,
       name: itemName,
       quantity,
       unitPrice,
       sumAmount,
     }))
     setTableData((prevData) => [...prevData, ...newDataArray])
-    setSelectedItemId('')
+    setInputItemId('')
     setQuantity(0)
   }
 
@@ -197,20 +193,13 @@ function TablePage() {
               gap: 2,
             }}
           >
-            <InputLabel id="product-select-label">{t('品番')}</InputLabel>
-            <Select
-              labelId="product-select-label"
-              id="product-select"
-              value={selectedItemId}
+            <TextField
               label={t('品番')}
-              onChange={(e: SelectChangeEvent) => setSelectedItemId(e.target.value)}
-            >
-              {itemOptions.map((itemId) => (
-                <MenuItem key={itemId} value={itemId}>
-                  {itemId} ({items[itemId].name})
-                </MenuItem>
-              ))}
-            </Select>
+              variant="outlined"
+              value={inputItemId}
+              onChange={(e) => setInputItemId(e.target.value)}
+              fullWidth
+            />
             <TextField
               label={t('品名')}
               variant="filled"
