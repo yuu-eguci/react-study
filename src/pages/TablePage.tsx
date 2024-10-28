@@ -1,4 +1,5 @@
 import IdHintChip from '@/components/IdHintChip'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { useAuthRedirect } from '@/hooks/useAuthRedirect'
 import {
   Box,
@@ -306,6 +307,9 @@ function TablePage() {
           </TableContainer>
         </Box>
       </Box>
+
+      {/* 言語スイッチ */}
+      <LanguageSwitcher />
     </Box>
   )
 }

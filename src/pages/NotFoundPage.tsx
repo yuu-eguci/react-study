@@ -1,3 +1,4 @@
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
 
 function NotFoundPage() {
@@ -6,6 +7,9 @@ function NotFoundPage() {
   return (
     <div>
       <h1>{t('Not Found')}</h1>
+
+      {/* 言語スイッチ */}
+      <LanguageSwitcher />
     </div>
   )
 }

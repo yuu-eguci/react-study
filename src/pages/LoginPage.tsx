@@ -1,3 +1,4 @@
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import LoginButton from '@/components/LoginButton'
 import LoginLoadingButton from '@/components/LoginLoadingButton'
 import LoginSuccessButton from '@/components/LoginSuccessButton'
@@ -194,6 +195,9 @@ function LoginPage() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      {/* 言語スイッチ */}
+      <LanguageSwitcher />
     </Box>
   )
 }

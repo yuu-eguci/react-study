@@ -1,4 +1,5 @@
 import CustomImageButton from '@/components/CustomImageButton'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { useAuthRedirect } from '@/hooks/useAuthRedirect'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
@@ -69,7 +70,7 @@ function MainMenuPage() {
     >
       {user && (
         <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-          {t('ようこそ')} {user} {t('さん')} {/* t でラップ */}
+          {t('ようこそ')} {t('{{name}} さん', {name: user})}
         </Typography>
       )}
       <Box
@@ -97,6 +98,9 @@ function MainMenuPage() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      {/* 言語スイッチ */}
+      <LanguageSwitcher />
     </Box>
   )
 }

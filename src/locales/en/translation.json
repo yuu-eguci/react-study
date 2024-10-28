@@ -38,7 +38,7 @@
   "いろいろなコントロール": "Various Controls",
   "ログアウト": "Logout",
   "ようこそ": "Welcome",
-  "さん": "Mr./Ms.",
+  "{{name}} さん": "Mr./Ms. {{name}}",
   "Not Found": "Not Found",
   "品番を入力してください": "Please enter the product number.",
   "すべての値を正しく入力してください": "Please enter all values correctly.",

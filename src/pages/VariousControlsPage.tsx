@@ -1,3 +1,4 @@
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import RGBCheckBoxQuizComponent from '@/components/RGBCheckBoxQuizComponent'
 import RGBRadioGroupQuizComponent from '@/components/RGBRadioGroupQuizComponent'
 import { useAuthRedirect } from '@/hooks/useAuthRedirect'
@@ -67,6 +68,9 @@ function VariousControlsPage() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      {/* 言語スイッチ */}
+      <LanguageSwitcher />
     </Box>
   )
 }
