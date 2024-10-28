@@ -34,7 +34,7 @@ function MainMenuPage() {
   const images = [
     {
       url: cityImg,
-      title: t('メインの入力ページ'),
+      title: t('発注入力'),
       width: '100%',
       link: `/table?user=${encodeURIComponent(user || '')}`,
       icon: <TableChartIcon />,
