@@ -111,7 +111,7 @@ function LoginPage() {
             }}
           >
             <Typography variant="h5" component="div">
-              {t('素敵で小さなサンプルウェブページ')}
+              {t('サンプル WEB 発注システム')}
             </Typography>
             <Typography variant="caption">
               {t('Lovely Little Sample Web Page')}
