@@ -24,16 +24,16 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 const items: { [key: string]: { id: string; name: string; unitPrice: number } } = {
-  A001: { id: 'A001', name: 'ノートパソコン', unitPrice: 50 },
-  A002: { id: 'A002', name: 'スマートフォン', unitPrice: 15 },
-  A003: { id: 'A003', name: 'プリンター', unitPrice: 10 },
-  A004: { id: 'A004', name: 'デスクチェア', unitPrice: 5 },
-  A005: { id: 'A005', name: 'コーヒーメーカー', unitPrice: 10 },
-  A006: { id: 'A006', name: 'ヘッドフォン', unitPrice: 30 },
-  A007: { id: 'A007', name: 'ボールペン', unitPrice: 49 },
-  A008: { id: 'A008', name: 'ノート', unitPrice: 45 },
-  A009: { id: 'A009', name: 'モニター', unitPrice: 10 },
-  A010: { id: 'A010', name: 'キーボード', unitPrice: 30 },
+  A001: { id: 'A001', name: 'ノートパソコン', unitPrice: 100000 },
+  A002: { id: 'A002', name: 'スマートフォン', unitPrice: 80000 },
+  A003: { id: 'A003', name: 'プリンター', unitPrice: 15000 },
+  A004: { id: 'A004', name: 'デスクチェア', unitPrice: 12000 },
+  A005: { id: 'A005', name: 'コーヒーメーカー', unitPrice: 5000 },
+  A006: { id: 'A006', name: 'ヘッドフォン', unitPrice: 7000 },
+  A007: { id: 'A007', name: 'ボールペン', unitPrice: 100 },
+  A008: { id: 'A008', name: 'ノート', unitPrice: 200 },
+  A009: { id: 'A009', name: 'モニター', unitPrice: 30000 },
+  A010: { id: 'A010', name: 'キーボード', unitPrice: 5000 },
 }
 const itemOptions = Object.keys(items)
 
