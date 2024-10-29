@@ -195,6 +195,7 @@ function TablePage() {
             }}
           >
             <TextField
+              id="TablePage-item-id"
               label={t('品番')}
               variant="outlined"
               value={inputItemId}
@@ -212,6 +213,7 @@ function TablePage() {
               }}
             />
             <TextField
+              id="TablePage-quantity"
               label={t('数量')}
               type="number"
               variant="outlined"
@@ -251,7 +253,13 @@ function TablePage() {
                 },
               }}
             />
-            <Button variant="contained" color="primary" onClick={handleAddData}>
+            <Button
+              // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+              id="TablePage-add-button"
+              variant="contained"
+              color="primary"
+              onClick={handleAddData}
+            >
               {t('データを追加')}
             </Button>
           </FormControl>
