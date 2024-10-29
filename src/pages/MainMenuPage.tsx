@@ -39,6 +39,8 @@ function MainMenuPage() {
       width: '100%',
       link: `/table?user=${encodeURIComponent(user || '')}`,
       icon: <TableChartIcon />,
+      // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+      buttonId: 'MainMenuPage-order-entry-button',
     },
     {
       url: seasideImg,
@@ -46,6 +48,8 @@ function MainMenuPage() {
       width: '100%',
       link: `/various-controls?user=${encodeURIComponent(user || '')}`,
       icon: <ToysIcon />,
+      // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+      buttonId: 'MainMenuPage-various-control-button',
     },
     {
       url: wavingImg,
@@ -53,6 +57,8 @@ function MainMenuPage() {
       width: '100%',
       link: '/login',
       icon: <LogoutIcon />,
+      // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+      buttonId: 'MainMenuPage-logout-button',
     },
   ]
 

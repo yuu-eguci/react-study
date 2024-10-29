@@ -11,6 +11,7 @@ export interface ImageType {
   width: string
   link: string
   icon: JSX.Element
+  buttonId: string
 }
 
 // コンポーネントのプロパティの型定義
@@ -97,6 +98,8 @@ function CustomImageButton({ image }: CustomImageButtonProps) {
       }}
     >
       <ImageButton
+        // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+        id={image.buttonId}
         focusRipple
         aria-label={image.title}
         onClick={() => navigate(image.link)}
