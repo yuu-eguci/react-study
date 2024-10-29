@@ -9,6 +9,8 @@ interface LoginButtonProps {
 const LoginButton = ({ onClick, disabled }: LoginButtonProps) => {
   return (
     <Button
+      // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+      id="LoginButton-button"
       variant="contained"
       color="primary"
       onClick={onClick}

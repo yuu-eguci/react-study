@@ -130,6 +130,8 @@ function LoginPage() {
         }}
       >
         <TextField
+          // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+          id="LoginPage-login-id"
           label={t('ログイン ID')}
           variant="outlined"
           fullWidth
@@ -142,6 +144,8 @@ function LoginPage() {
           }}
         />
         <TextField
+          // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+          id="LoginPage-password"
           label={t('パスワード')}
           variant="outlined"
           type={showPassword ? 'text' : 'password'}
@@ -171,6 +175,8 @@ function LoginPage() {
         <FormControlLabel
           control={
             <Checkbox
+              // NOTE: Automate で id 指定で操作したい、という要望のため、 id を固定。
+              id="LoginPage-agree-to-terms"
               checked={agreeToTerms}
               onChange={(e) => setAgreeToTerms(e.target.checked)}
             />
